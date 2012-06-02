@@ -1,5 +1,5 @@
-#include <cppshell/command_output/object.hpp>
 #include <cppshell/context.hpp>
+#include <cppshell/command_output/object.hpp>
 #include <cppshell/stream/object.hpp>
 #include <fcppt/move.hpp>
 

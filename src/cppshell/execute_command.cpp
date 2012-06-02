@@ -1,4 +1,3 @@
-#include <fcppt/ref.hpp>
 #include <cppshell/context.hpp>
 #include <cppshell/execute_command.hpp>
 #include <cppshell/command_output/object.hpp>
@@ -11,6 +10,7 @@
 #include <fcppt/make_unique_ptr.hpp>
 #include <fcppt/move.hpp>
 #include <fcppt/optional.hpp>
+#include <fcppt/ref.hpp>
 #include <fcppt/assert/pre_message.hpp>
 #include <fcppt/container/bitfield/object_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
@@ -52,7 +52,7 @@ forked_function(
 	}
 	else if(!(_error_stream_flags & cppshell::error_stream_flags::ignore))
 	{
-		
+
 	}
 
 	if(_optional_input_stream)

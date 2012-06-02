@@ -1,6 +1,6 @@
-#include <fcppt/move.hpp>
 #include <cppshell/check_unix_command_error.hpp>
 #include <cppshell/posix/fork.hpp>
+#include <fcppt/move.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <unistd.h>
 #include <fcppt/config/external_end.hpp>
