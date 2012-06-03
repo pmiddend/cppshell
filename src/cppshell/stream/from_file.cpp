@@ -18,16 +18,16 @@ cppshell::stream::from_file(
 		boost::filesystem::absolute(
 			_path).string<std::string>();
 
-	int const return_value =
+	cppshell::posix::fd const return_value{
 		::open(
 			absolute_path.c_str(),
-			O_RDONLY);
+			O_RDONLY)};
 
 	cppshell::check_unix_command_error(
 		"open(\""+
 		absolute_path+
 		"\")",
-		return_value);
+		return_value.get());
 
 	return
 		fcppt::make_unique_ptr<cppshell::stream::object>(

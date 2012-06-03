@@ -8,25 +8,38 @@
 
 
 cppshell::stream::object::object(
-	int const _fd)
+	cppshell::posix::fd const &_fd)
 :
-	fd_(
-		_fd)
+	fd_{
+		_fd},
+	close_on_destruction_{
+		true}
 {
 }
 
-int
+cppshell::posix::fd const &
 cppshell::stream::object::fd() const
 {
-	return fd_;
+	return
+		fd_;
+}
+
+void
+cppshell::stream::object::dont_close_on_destruction()
+{
+	close_on_destruction_ =
+		false;
 }
 
 cppshell::stream::object::~object()
 {
-	int const error_code =
-		::close(
-			fd_);
+	if(close_on_destruction_)
+	{
+		int const error_code =
+			::close(
+				fd_.get());
 
-	if(error_code)
-		std::cerr << "Closing a stream failed: " << std::strerror(errno) << "\n";
+		if(error_code)
+			std::cerr << "Closing a stream failed: " << std::strerror(errno) << "\n";
+	}
 }

@@ -53,6 +53,8 @@ set(
 	src/cppshell/command_output/object.cpp
 	src/cppshell/context.cpp
 	src/cppshell/execute_command.cpp
+	src/cppshell/linux/epoll/object.cpp
+	src/cppshell/linux/eventfd.cpp
 	src/cppshell/posix/exec.cpp
 	src/cppshell/posix/fork.cpp
 	src/cppshell/posix/pipe.cpp

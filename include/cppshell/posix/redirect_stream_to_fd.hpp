@@ -2,6 +2,7 @@
 #define CPPSHELL_POSIX_REDIRECT_STREAM_TO_FD_HPP_INCLUDED
 
 #include <cppshell/symbol.hpp>
+#include <cppshell/posix/fd.hpp>
 #include <cppshell/stream/object_fwd.hpp>
 
 
@@ -13,7 +14,7 @@ CPPSHELL_SYMBOL
 void
 redirect_stream_to_fd(
 	cppshell::stream::object &,
-	int);
+	cppshell::posix::fd const &);
 }
 }
 

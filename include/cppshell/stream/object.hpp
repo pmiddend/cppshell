@@ -2,6 +2,7 @@
 #define CPPSHELL_STREAM_OBJECT_HPP_INCLUDED
 
 #include <cppshell/symbol.hpp>
+#include <cppshell/posix/fd.hpp>
 #include <fcppt/noncopyable.hpp>
 
 namespace cppshell
@@ -14,16 +15,20 @@ public:
 	CPPSHELL_SYMBOL
 	explicit
 	object(
-		int);
+		cppshell::posix::fd const &);
 
 	CPPSHELL_SYMBOL
-	int
+	cppshell::posix::fd const &
 	fd() const;
+
+	void
+	dont_close_on_destruction();
 
 	CPPSHELL_SYMBOL
 	~object();
 private:
-	int const fd_;
+	cppshell::posix::fd const fd_;
+	bool close_on_destruction_;
 };
 }
 }

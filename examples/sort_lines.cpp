@@ -15,7 +15,9 @@
 #include <fcppt/config/external_end.hpp>
 
 
-int main()
+int main(
+	int argc,
+	char *argv[])
 try
 {
 	cppshell::context context;
@@ -36,7 +38,7 @@ try
 				},
 				cppshell::error_stream_flags_field{},
 				cppshell::stream::from_file(
-					"/tmp/to_sort"))->release_output())};
+					argv[1]))->release_output())};
 
 	cppshell::stream::to_ostream(
 		*output->release_output(),

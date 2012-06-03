@@ -22,11 +22,13 @@ cppshell::posix::pipe::pipe()
 
 	read_end_ =
 		fcppt::make_unique_ptr<cppshell::stream::object>(
-			pipes[0]);
+			cppshell::posix::fd(
+				pipes[0]));
 
 	write_end_ =
 		fcppt::make_unique_ptr<cppshell::stream::object>(
-			pipes[1]);
+			cppshell::posix::fd(
+				pipes[1]));
 }
 
 cppshell::stream::object_unique_ptr

@@ -2,12 +2,16 @@
 #define CPPSHELL_CONTEXT_HPP_INCLUDED
 
 #include <cppshell/optional_process_description.hpp>
+#include <cppshell/stream/object_unique_ptr.hpp>
+#include <cppshell/linux/epoll/object.hpp>
 #include <cppshell/symbol.hpp>
+#include <cppshell/linux/eventfd.hpp>
 #include <cppshell/posix/process_id.hpp>
 #include <fcppt/noncopyable.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <cstddef>
 #include <tuple>
+#include <thread>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
@@ -27,6 +31,11 @@ public:
 	add_process(
 		cppshell::posix::process_id const &,
 		cppshell::optional_process_description const &);
+
+	CPPSHELL_SYMBOL
+	void
+	add_asynchronous_output(
+		cppshell::stream::object_unique_ptr);
 
 	CPPSHELL_SYMBOL
 	void
@@ -51,6 +60,12 @@ private:
 	process_sequence;
 
 	process_sequence processes_;
+	cppshell::linux::eventfd cancel_event_;
+	cppshell::linux::epoll::object epoll_object_;
+	std::thread asynchronous_output_thread_;
+
+	void
+	asynchronous_output_thread();
 };
 }
 

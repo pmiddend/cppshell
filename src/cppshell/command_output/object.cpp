@@ -3,6 +3,7 @@
 #include <cppshell/stream/object.hpp>
 #include <fcppt/move.hpp>
 
+#include <iostream>
 
 cppshell::command_output::object::object(
 	cppshell::context &_context,
@@ -53,9 +54,26 @@ cppshell::command_output::object::release_process_id()
 
 cppshell::command_output::object::~object()
 {
-	if(
-		process_id_)
+	if(process_id_)
+	{
 		context_.add_process(
 			*process_id_,
 			process_description_);
+	}
+
+	if(
+		error_)
+	{
+		context_.add_asynchronous_output(
+			fcppt::move(
+				error_));
+	}
+
+	if(
+		output_)
+	{
+		context_.add_asynchronous_output(
+			fcppt::move(
+				output_));
+	}
 }

@@ -40,11 +40,13 @@ forked_function(
 
 	cppshell::posix::redirect_stream_to_fd(
 		*out_write_end,
-		STDOUT_FILENO);
+		cppshell::posix::fd{
+			STDOUT_FILENO});
 
 	cppshell::posix::redirect_stream_to_fd(
 		*err_write_end,
-		STDERR_FILENO);
+		cppshell::posix::fd{
+			STDERR_FILENO});
 
 	if(_error_stream_flags & cppshell::error_stream_flags::redirect_to_output)
 	{
@@ -58,7 +60,8 @@ forked_function(
 	if(_optional_input_stream)
 		cppshell::posix::redirect_stream_to_fd(
 			*_optional_input_stream,
-			STDIN_FILENO);
+			cppshell::posix::fd{
+				STDIN_FILENO});
 
 	cppshell::posix::exec(
 		_elements);
@@ -97,7 +100,9 @@ cppshell::execute_command(
 
 	cppshell::stream::object_unique_ptr error_stream_ptr{};
 
-	if(_error_stream_flags & cppshell::error_stream_flags::redirect_to_output || _error_stream_flags & cppshell::error_stream_flags::ignore)
+	if(
+		_error_stream_flags & cppshell::error_stream_flags::redirect_to_output ||
+		_error_stream_flags & cppshell::error_stream_flags::ignore)
 		err_pipe.release_read_end();
 	else
 		error_stream_ptr =

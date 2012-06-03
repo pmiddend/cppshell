@@ -20,7 +20,7 @@ cppshell::stream::to_ostream(
 	while(
 		ssize_t const read_bytes =
 			::read(
-				_stream.fd(),
+				_stream.fd().get(),
 				buffer.data(),
 				buffer.size()))
 	{
