@@ -1,20 +1,22 @@
-#include <array>
 #include <cppshell/check_unix_command_error.hpp>
-#include <unistd.h>
 #include <cppshell/context.hpp>
-#include <cppshell/stream/object.hpp>
 #include <cppshell/posix/wait_for_process.hpp>
+#include <cppshell/stream/object.hpp>
 #include <fcppt/optional.hpp>
+#include <fcppt/container/bitfield/object.hpp>
 #include <fcppt/config/external_begin.hpp>
+#include <array>
 #include <functional>
 #include <iostream>
+#include <unistd.h>
 #include <fcppt/config/external_end.hpp>
-#include <fcppt/container/bitfield/object.hpp>
 
 
-cppshell::context::context()
+cppshell::context::context(
+	cppshell::process::wait_for_completion const &_wait_for_completion)
 :
-	processes_{},
+	process_manager_{
+		_wait_for_completion},
 	cancel_event_{
 		static_cast<cppshell::linux::eventfd::initial_value_type>(
 			0)},
@@ -32,15 +34,18 @@ cppshell::context::context()
 			cppshell::linux::epoll::control_flags::is_readable});
 }
 
-void
-cppshell::context::add_process(
-	cppshell::posix::process_id const &_process_id,
-	cppshell::optional_process_description const &_process_description)
+cppshell::process::manager &
+cppshell::context::process_manager()
 {
-	processes_.push_back(
-		process_tuple{
-			_process_id,
-			_process_description});
+	return
+		process_manager_;
+}
+
+cppshell::process::manager const &
+cppshell::context::process_manager() const
+{
+	return
+		process_manager_;
 }
 
 void
@@ -55,45 +60,12 @@ cppshell::context::add_asynchronous_output(
 			cppshell::linux::epoll::control_flags::is_readable});
 }
 
-void
-cppshell::context::wait_for_processes()
-{
-	for(
-		cppshell::context::process_tuple const &current_tuple : processes_)
-	{
-		if(
-			cppshell::posix::wait_for_process(
-				std::get<cppshell::context::process_id_index>(
-					current_tuple)).get())
-		{
-			std::string const process_description{
-				std::get<process_description_index>(
-					current_tuple)
-				?
-					*std::get<process_description_index>(
-						current_tuple)
-				:
-					std::string{
-						"<unknown id>"}};
-
-			std::cerr
-				<< "Process \""
-				<< process_description
-				<< "\" failed!\n";
-		}
-	}
-
-	processes_.clear();
-}
-
 cppshell::context::~context()
 {
 	cancel_event_.add(
 		1u);
 
 	asynchronous_output_thread_.join();
-
-	this->wait_for_processes();
 }
 
 void

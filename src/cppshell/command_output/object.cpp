@@ -3,28 +3,26 @@
 #include <cppshell/stream/object.hpp>
 #include <fcppt/move.hpp>
 
-#include <iostream>
-
 cppshell::command_output::object::object(
 	cppshell::context &_context,
 	cppshell::stream::object_unique_ptr _output,
 	cppshell::stream::object_unique_ptr _error,
 	cppshell::posix::process_id_unique_ptr _process_id,
-	cppshell::optional_process_description const &_process_description)
+	cppshell::process::optional_description const &_process_description)
 :
 	context_(
 		_context),
-	output_(
+	output_{
 		fcppt::move(
-			_output)),
-	error_(
+			_output)},
+	error_{
 		fcppt::move(
-			_error)),
-	process_id_(
+			_error)},
+	process_id_{
 		fcppt::move(
-			_process_id)),
-	process_description_(
-		_process_description)
+			_process_id)},
+	process_description_{
+		_process_description}
 {
 }
 
@@ -56,7 +54,7 @@ cppshell::command_output::object::~object()
 {
 	if(process_id_)
 	{
-		context_.add_process(
+		context_.process_manager().add_process(
 			*process_id_,
 			process_description_);
 	}

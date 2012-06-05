@@ -2,7 +2,7 @@
 #define CPPSHELL_COMMAND_OUTPUT_OBJECT_HPP_INCLUDED
 
 #include <cppshell/context_fwd.hpp>
-#include <cppshell/optional_process_description.hpp>
+#include <cppshell/process/optional_description.hpp>
 #include <cppshell/symbol.hpp>
 #include <cppshell/posix/process_id_unique_ptr.hpp>
 #include <cppshell/stream/object_unique_ptr.hpp>
@@ -25,7 +25,7 @@ public:
 		cppshell::stream::object_unique_ptr output,
 		cppshell::stream::object_unique_ptr error,
 		cppshell::posix::process_id_unique_ptr,
-		cppshell::optional_process_description const &);
+		cppshell::process::optional_description const &);
 
 	CPPSHELL_SYMBOL
 	cppshell::stream::object_unique_ptr
@@ -45,7 +45,7 @@ private:
 	cppshell::stream::object_unique_ptr output_;
 	cppshell::stream::object_unique_ptr error_;
 	cppshell::posix::process_id_unique_ptr process_id_;
-	cppshell::optional_process_description process_description_;
+	cppshell::process::optional_description process_description_;
 };
 }
 }

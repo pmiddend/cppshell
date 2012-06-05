@@ -61,6 +61,8 @@ set(
 	src/cppshell/posix/redirect_stderr_to_stdout.cpp
 	src/cppshell/posix/redirect_stream_to_fd.cpp
 	src/cppshell/posix/wait_for_process.cpp
+	src/cppshell/process/data.cpp
+	src/cppshell/process/manager.cpp
 	src/cppshell/stream/from_file.cpp
 	src/cppshell/stream/object.cpp
 	src/cppshell/stream/to_ostream.cpp

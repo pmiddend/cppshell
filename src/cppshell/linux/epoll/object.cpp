@@ -1,11 +1,11 @@
 #include <cppshell/check_unix_command_error.hpp>
 #include <cppshell/linux/epoll/object.hpp>
+#include <fcppt/container/bitfield/object_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <sys/epoll.h>
+#include <iostream>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
-#include <fcppt/container/bitfield/object_impl.hpp>
-#include <iostream>
 
 
 cppshell::linux::epoll::object::object(

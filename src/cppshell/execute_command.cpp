@@ -117,6 +117,6 @@ cppshell::execute_command(
 				error_stream_ptr),
 			fcppt::move(
 				pid),
-			cppshell::optional_process_description{
+			cppshell::process::optional_description{
 				_elements.front()});
 }

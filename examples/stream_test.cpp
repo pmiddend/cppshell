@@ -18,7 +18,9 @@
 int main()
 try
 {
-	cppshell::context context;
+	cppshell::context context{
+		cppshell::process::wait_for_completion{
+			true}};
 
 	cppshell::command_output::object_scoped_ptr output{
 		cppshell::execute_command(

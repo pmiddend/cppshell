@@ -1,5 +1,5 @@
-#ifndef CPPSHELL_OPTIONAL_PROCESS_DESCRIPTION_HPP_INCLUDED
-#define CPPSHELL_OPTIONAL_PROCESS_DESCRIPTION_HPP_INCLUDED
+#ifndef CPPSHELL_PROCESS_OPTIONAL_DESCRIPTION_HPP_INCLUDED
+#define CPPSHELL_PROCESS_OPTIONAL_DESCRIPTION_HPP_INCLUDED
 
 #include <fcppt/optional_fwd.hpp>
 #include <fcppt/config/external_begin.hpp>
@@ -9,9 +9,12 @@
 
 namespace cppshell
 {
+namespace process
+{
 typedef
 fcppt::optional<std::string>
-optional_process_description;
+optional_description;
+}
 }
 
 #endif
