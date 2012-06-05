@@ -1,7 +1,7 @@
-#include <cppshell/check_unix_command_error.hpp>
 #include <cppshell/exception.hpp>
-#include <cppshell/stream/object.hpp>
-#include <cppshell/stream/to_ostream.hpp>
+#include <cppshell/fd_to_ostream.hpp>
+#include <cppshell/check_unix_command_error.hpp>
+#include <cppshell/strong_fd.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <array>
 #include <ostream>
@@ -10,8 +10,8 @@
 
 
 void
-cppshell::stream::to_ostream(
-	cppshell::stream::object &_stream,
+cppshell::fd_to_ostream(
+	cppshell::strong_fd const &_fd,
 	std::ostream &_ostream)
 {
 	std::size_t const buffer_size = 1024u;
@@ -20,7 +20,7 @@ cppshell::stream::to_ostream(
 	while(
 		ssize_t const read_bytes =
 			::read(
-				_stream.fd().get(),
+				_fd.value().get(),
 				buffer.data(),
 				buffer.size()))
 	{

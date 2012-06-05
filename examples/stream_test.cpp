@@ -1,11 +1,9 @@
+#include <cppshell/strong_fd.hpp>
 #include <cppshell/context.hpp>
 #include <cppshell/execute_command.hpp>
 #include <cppshell/command_output/object.hpp>
 #include <cppshell/command_output/object_scoped_ptr.hpp>
-#include <cppshell/stream/from_file.hpp>
-#include <cppshell/stream/object.hpp>
-#include <cppshell/stream/object_scoped_ptr.hpp>
-#include <cppshell/stream/to_ostream.hpp>
+#include <cppshell/fd_to_ostream.hpp>
 #include <fcppt/container/bitfield/object_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <cstddef>
@@ -35,14 +33,14 @@ try
 				context,
 				cppshell::command_arguments
 				{
-					"/tmp/test"
+					"/etc/passwd"
 				},
 				cppshell::error_stream_flags_field::null(),
-				cppshell::optional_input_stream{})->release_output())};
+				cppshell::optional_input_fd{})->release_output())};
 
 	std::cout << "main: Outputting to stream\n";
 
-	cppshell::stream::to_ostream(
+	cppshell::fd_to_ostream(
 		*output->release_output(),
 		std::cout);
 

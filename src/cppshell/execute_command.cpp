@@ -5,8 +5,8 @@
 #include <cppshell/posix/fork.hpp>
 #include <cppshell/posix/pipe.hpp>
 #include <cppshell/posix/redirect_stderr_to_stdout.hpp>
-#include <cppshell/posix/redirect_stream_to_fd.hpp>
-#include <cppshell/stream/object.hpp>
+#include <cppshell/posix/redirect_to_fd.hpp>
+#include <cppshell/strong_fd.hpp>
 #include <fcppt/make_unique_ptr.hpp>
 #include <fcppt/move.hpp>
 #include <fcppt/optional.hpp>
@@ -24,7 +24,7 @@ namespace
 void
 forked_function(
 	cppshell::command_arguments const &_elements,
-	cppshell::optional_input_stream &_optional_input_stream,
+	cppshell::optional_input_fd &_optional_input_fd,
 	cppshell::posix::pipe &out_pipe,
 	cppshell::posix::pipe &err_pipe,
 	cppshell::error_stream_flags_field const &_error_stream_flags)
@@ -32,19 +32,19 @@ forked_function(
 	out_pipe.release_read_end();
 	err_pipe.release_read_end();
 
-	cppshell::stream::object_unique_ptr
+	cppshell::strong_fd_unique_ptr
 		out_write_end{
 			out_pipe.release_write_end()},
 		err_write_end{
 			err_pipe.release_write_end()};
 
-	cppshell::posix::redirect_stream_to_fd(
-		*out_write_end,
+	cppshell::posix::redirect_to_fd(
+		out_write_end->value(),
 		cppshell::posix::fd{
 			STDOUT_FILENO});
 
-	cppshell::posix::redirect_stream_to_fd(
-		*err_write_end,
+	cppshell::posix::redirect_to_fd(
+		err_write_end->value(),
 		cppshell::posix::fd{
 			STDERR_FILENO});
 
@@ -57,9 +57,9 @@ forked_function(
 
 	}
 
-	if(_optional_input_stream)
-		cppshell::posix::redirect_stream_to_fd(
-			*_optional_input_stream,
+	if(_optional_input_fd)
+		cppshell::posix::redirect_to_fd(
+			_optional_input_fd->value(),
 			cppshell::posix::fd{
 				STDIN_FILENO});
 
@@ -73,7 +73,7 @@ cppshell::execute_command(
 	cppshell::context &_context,
 	cppshell::command_arguments const &_elements,
 	cppshell::error_stream_flags_field const &_error_stream_flags,
-	cppshell::optional_input_stream _optional_input_stream)
+	cppshell::optional_input_fd _optional_input_fd)
 {
 	FCPPT_ASSERT_PRE_MESSAGE(
 		!_elements.empty(),
@@ -87,7 +87,7 @@ cppshell::execute_command(
 				&::forked_function,
 				_elements,
 				std::ref(
-					_optional_input_stream),
+					_optional_input_fd),
 				std::ref(
 					out_pipe),
 				std::ref(
@@ -98,7 +98,7 @@ cppshell::execute_command(
 	out_pipe.release_write_end();
 	err_pipe.release_write_end();
 
-	cppshell::stream::object_unique_ptr error_stream_ptr{};
+	cppshell::strong_fd_unique_ptr error_stream_ptr{};
 
 	if(
 		_error_stream_flags & cppshell::error_stream_flags::redirect_to_output ||

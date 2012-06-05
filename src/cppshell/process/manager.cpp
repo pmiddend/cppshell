@@ -1,6 +1,9 @@
 #include <cppshell/posix/wait_for_process.hpp>
 #include <cppshell/process/manager.hpp>
+#include <fcppt/config/external_begin.hpp>
 #include <iostream>
+#include <fcppt/config/external_end.hpp>
+
 
 cppshell::process::manager::manager(
 	cppshell::process::wait_for_completion const &_wait_for_completion)

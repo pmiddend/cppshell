@@ -53,19 +53,20 @@ set(
 	src/cppshell/command_output/object.cpp
 	src/cppshell/context.cpp
 	src/cppshell/execute_command.cpp
+	src/cppshell/fd_to_ostream.cpp
 	src/cppshell/linux/epoll/object.cpp
 	src/cppshell/linux/eventfd.cpp
+	src/cppshell/output/manager.cpp
 	src/cppshell/posix/exec.cpp
 	src/cppshell/posix/fork.cpp
+	src/cppshell/posix/open.cpp
 	src/cppshell/posix/pipe.cpp
 	src/cppshell/posix/redirect_stderr_to_stdout.cpp
-	src/cppshell/posix/redirect_stream_to_fd.cpp
+	src/cppshell/posix/redirect_to_fd.cpp
 	src/cppshell/posix/wait_for_process.cpp
 	src/cppshell/process/data.cpp
 	src/cppshell/process/manager.cpp
-	src/cppshell/stream/from_file.cpp
-	src/cppshell/stream/object.cpp
-	src/cppshell/stream/to_ostream.cpp
+	src/cppshell/strong_fd.cpp
 )
 
 fcppt_generate_symbol_header(
