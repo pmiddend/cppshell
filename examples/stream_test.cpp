@@ -1,9 +1,9 @@
-#include <cppshell/strong_fd.hpp>
 #include <cppshell/context.hpp>
 #include <cppshell/execute_command.hpp>
+#include <cppshell/fd_to_ostream.hpp>
+#include <cppshell/strong_fd.hpp>
 #include <cppshell/command_output/object.hpp>
 #include <cppshell/command_output/object_scoped_ptr.hpp>
-#include <cppshell/fd_to_ostream.hpp>
 #include <fcppt/container/bitfield/object_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <cstddef>

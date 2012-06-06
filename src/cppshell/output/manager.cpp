@@ -1,14 +1,9 @@
-#include <cppshell/strong_fd.hpp>
 #include <cppshell/check_unix_command_error.hpp>
-#include <fcppt/container/bitfield/object_impl.hpp>
+#include <cppshell/strong_fd.hpp>
 #include <cppshell/output/manager.hpp>
-#include <fcppt/config/external_begin.hpp>
-#include <array>
-#include <cstddef>
-#include <functional>
-#include <iostream>
-#include <unistd.h>
-#include <fcppt/config/external_end.hpp>
+#include <fcppt/cref.hpp>
+#include <fcppt/container/bitfield/object_impl.hpp>
+#include <fcppt/container/ptr/insert_unique_ptr_map.hpp>
 
 
 cppshell::output::manager::manager()
@@ -16,82 +11,38 @@ cppshell::output::manager::manager()
 	cancel_event_{
 		static_cast<cppshell::linux::eventfd::initial_value_type>(
 			0)},
-	epoll_object_{
-		cppshell::linux::epoll::parallel_event_count{
-			1024}},
-	asynchronous_output_thread_{
-		std::bind(
-			&cppshell::output::manager::asynchronous_output_thread,
-			this)}
+	fd_to_thread_data_{}
 {
-	epoll_object_.add(
-		cancel_event_.fd(),
-		cppshell::linux::epoll::control_flags_field{
-			cppshell::linux::epoll::control_flags::is_readable});
 }
 
 void
-cppshell::output::manager::add_asynchronous_output(
-	cppshell::strong_fd_unique_ptr _asynchronous_fd)
+cppshell::output::manager::add_asynchronous_redirection(
+	cppshell::strong_fd_unique_ptr _asynchronous_fd,
+	cppshell::output::redirection_target const &_redirection_target)
 {
-	_asynchronous_fd->dont_close();
+	fd_to_thread_data_map::iterator it =
+		fd_to_thread_data_.find(
+			_redirection_target.get());
 
-	epoll_object_.add(
-		_asynchronous_fd->value(),
-		cppshell::linux::epoll::control_flags_field{
-			cppshell::linux::epoll::control_flags::is_readable});
+	if(it == fd_to_thread_data_.end())
+	{
+		it =
+			fcppt::container::ptr::insert_unique_ptr_map(
+				fd_to_thread_data_,
+				_redirection_target.get(),
+				fcppt::make_unique_ptr<cppshell::output::thread_data>(
+					_redirection_target,
+					fcppt::cref(
+						cancel_event_))).first;
+	}
+
+	it->second->add(
+		fcppt::move(
+			_asynchronous_fd));
 }
 
 cppshell::output::manager::~manager()
 {
 	cancel_event_.add(
 		1u);
-
-	asynchronous_output_thread_.join();
-}
-
-void
-cppshell::output::manager::asynchronous_output_thread()
-{
-	bool cancel_triggered{
-		false};
-
-	std::size_t const block_size{
-		1024u};
-
-	std::array<char,block_size> buffer;
-
-	while(!cancel_triggered)
-	{
-		for(
-			cppshell::posix::fd const &fd :
-				epoll_object_.wait(
-					cppshell::linux::epoll::optional_timeout_duration{}))
-		{
-			if(fd.get() == cancel_event_.fd().get())
-			{
-				cancel_triggered = true;
-				break;
-			}
-
-			ssize_t const bytes_read{
-				::read(
-					fd.get(),
-					buffer.data(),
-					buffer.size())};
-
-			cppshell::check_unix_command_error(
-				"read",
-				static_cast<int>(
-					bytes_read));
-
-			if(bytes_read == 0)
-				continue;
-
-			std::cerr.write(
-				buffer.data(),
-				static_cast<std::streamsize>(
-					bytes_read));
-		}
-	}
 }

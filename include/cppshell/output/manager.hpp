@@ -5,8 +5,12 @@
 #include <cppshell/symbol.hpp>
 #include <cppshell/linux/eventfd.hpp>
 #include <cppshell/linux/epoll/object.hpp>
+#include <cppshell/output/redirection_target.hpp>
+#include <cppshell/output/thread_data.hpp>
+#include <cppshell/posix/fd.hpp>
 #include <fcppt/noncopyable.hpp>
 #include <fcppt/config/external_begin.hpp>
+#include <boost/ptr_container/ptr_map.hpp>
 #include <thread>
 #include <fcppt/config/external_end.hpp>
 
@@ -25,17 +29,22 @@ public:
 
 	CPPSHELL_SYMBOL
 	void
-	add_asynchronous_output(
-		cppshell::strong_fd_unique_ptr);
+	add_asynchronous_redirection(
+		cppshell::strong_fd_unique_ptr,
+		cppshell::output::redirection_target const &);
 
 	~manager();
 private:
-	cppshell::linux::eventfd cancel_event_;
-	cppshell::linux::epoll::object epoll_object_;
-	std::thread asynchronous_output_thread_;
+	typedef
+	boost::ptr_map
+	<
+		cppshell::posix::fd,
+		cppshell::output::thread_data
+	>
+	fd_to_thread_data_map;
 
-	void
-	asynchronous_output_thread();
+	cppshell::linux::eventfd cancel_event_;
+	fd_to_thread_data_map fd_to_thread_data_;
 };
 }
 }

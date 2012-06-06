@@ -1,7 +1,10 @@
-#include <cppshell/strong_fd.hpp>
 #include <cppshell/context.hpp>
+#include <cppshell/strong_fd.hpp>
 #include <cppshell/command_output/object.hpp>
+#include <cppshell/posix/stderr_fd.hpp>
+#include <cppshell/posix/stdout_fd.hpp>
 #include <fcppt/move.hpp>
+
 
 cppshell::command_output::object::object(
 	cppshell::context &_context,
@@ -63,16 +66,20 @@ cppshell::command_output::object::~object()
 	if(
 		error_)
 	{
-		context_.output_manager().add_asynchronous_output(
+		context_.output_manager().add_asynchronous_redirection(
 			fcppt::move(
-				error_));
+				error_),
+			cppshell::output::redirection_target{
+				cppshell::posix::stderr_fd()});
 	}
 
 	if(
 		output_)
 	{
-		context_.output_manager().add_asynchronous_output(
+		context_.output_manager().add_asynchronous_redirection(
 			fcppt::move(
-				output_));
+				output_),
+			cppshell::output::redirection_target{
+				cppshell::posix::stdout_fd()});
 	}
 }

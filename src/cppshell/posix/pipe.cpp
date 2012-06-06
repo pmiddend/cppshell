@@ -1,6 +1,6 @@
 #include <cppshell/check_unix_command_error.hpp>
-#include <cppshell/posix/pipe.hpp>
 #include <cppshell/strong_fd.hpp>
+#include <cppshell/posix/pipe.hpp>
 #include <fcppt/make_unique_ptr.hpp>
 #include <fcppt/move.hpp>
 #include <fcppt/config/external_begin.hpp>

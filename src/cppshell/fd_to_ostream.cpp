@@ -1,6 +1,6 @@
+#include <cppshell/check_unix_command_error.hpp>
 #include <cppshell/exception.hpp>
 #include <cppshell/fd_to_ostream.hpp>
-#include <cppshell/check_unix_command_error.hpp>
 #include <cppshell/strong_fd.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <array>

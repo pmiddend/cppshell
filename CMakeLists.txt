@@ -57,12 +57,15 @@ set(
 	src/cppshell/linux/epoll/object.cpp
 	src/cppshell/linux/eventfd.cpp
 	src/cppshell/output/manager.cpp
+	src/cppshell/output/thread_data.cpp
 	src/cppshell/posix/exec.cpp
 	src/cppshell/posix/fork.cpp
 	src/cppshell/posix/open.cpp
 	src/cppshell/posix/pipe.cpp
 	src/cppshell/posix/redirect_stderr_to_stdout.cpp
 	src/cppshell/posix/redirect_to_fd.cpp
+	src/cppshell/posix/stderr_fd.cpp
+	src/cppshell/posix/stdout_fd.cpp
 	src/cppshell/posix/wait_for_process.cpp
 	src/cppshell/process/data.cpp
 	src/cppshell/process/manager.cpp

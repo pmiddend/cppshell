@@ -1,12 +1,14 @@
+#include <cppshell/posix/stdout_fd.hpp>
+#include <cppshell/posix/stderr_fd.hpp>
 #include <cppshell/context.hpp>
 #include <cppshell/execute_command.hpp>
+#include <cppshell/strong_fd.hpp>
 #include <cppshell/command_output/object.hpp>
 #include <cppshell/posix/exec.hpp>
 #include <cppshell/posix/fork.hpp>
 #include <cppshell/posix/pipe.hpp>
 #include <cppshell/posix/redirect_stderr_to_stdout.hpp>
 #include <cppshell/posix/redirect_to_fd.hpp>
-#include <cppshell/strong_fd.hpp>
 #include <fcppt/make_unique_ptr.hpp>
 #include <fcppt/move.hpp>
 #include <fcppt/optional.hpp>
@@ -40,13 +42,11 @@ forked_function(
 
 	cppshell::posix::redirect_to_fd(
 		out_write_end->value(),
-		cppshell::posix::fd{
-			STDOUT_FILENO});
+		cppshell::posix::stdout_fd());
 
 	cppshell::posix::redirect_to_fd(
 		err_write_end->value(),
-		cppshell::posix::fd{
-			STDERR_FILENO});
+		cppshell::posix::stderr_fd());
 
 	if(_error_stream_flags & cppshell::error_stream_flags::redirect_to_output)
 	{
@@ -60,8 +60,7 @@ forked_function(
 	if(_optional_input_fd)
 		cppshell::posix::redirect_to_fd(
 			_optional_input_fd->value(),
-			cppshell::posix::fd{
-				STDIN_FILENO});
+			cppshell::posix::stdout_fd());
 
 	cppshell::posix::exec(
 		_elements);

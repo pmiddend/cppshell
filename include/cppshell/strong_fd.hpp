@@ -1,9 +1,10 @@
 #ifndef CPPSHELL_STRONG_FD_HPP_INCLUDED
 #define CPPSHELL_STRONG_FD_HPP_INCLUDED
 
-#include <cppshell/posix/fd.hpp>
 #include <cppshell/symbol.hpp>
+#include <cppshell/posix/fd.hpp>
 #include <fcppt/noncopyable.hpp>
+
 
 namespace cppshell
 {

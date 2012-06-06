@@ -1,14 +1,15 @@
 #include <cppshell/check_unix_command_error.hpp>
-#include <fcppt/container/bitfield/object_impl.hpp>
 #include <cppshell/strong_fd.hpp>
 #include <cppshell/posix/open.hpp>
 #include <fcppt/make_unique_ptr.hpp>
+#include <fcppt/container/bitfield/object_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <boost/filesystem/operations.hpp>
-#include <fcppt/config/external_end.hpp>
-#include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/types.h>
+#include <boost/filesystem/operations.hpp>
 #include <fcntl.h>
+#include <fcppt/config/external_end.hpp>
+
 
 cppshell::strong_fd_unique_ptr
 cppshell::posix::open(
