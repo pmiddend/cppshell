@@ -10,8 +10,8 @@
 #include <cppshell/posix/stderr_fd.hpp>
 #include <cppshell/posix/stdin_fd.hpp>
 #include <cppshell/posix/stdout_fd.hpp>
-#include <fcppt/make_unique_ptr.hpp>
-#include <fcppt/move.hpp>
+#include <cppshell/make_unique.hpp>
+#include <utility>
 #include <fcppt/optional.hpp>
 #include <fcppt/ref.hpp>
 #include <fcppt/assert/pre_message.hpp>
@@ -94,12 +94,12 @@ cppshell::execute_command(
 	cppshell::strong_fd_unique_ptr error_stream_ptr{};
 
 	return
-		fcppt::make_unique_ptr<cppshell::command_output::object>(
-			fcppt::ref(
+		cppshell::make_unique<cppshell::command_output::object>(
+			std::ref(
 				_context),
 			out_pipe.release_read_end(),
 			err_pipe.release_read_end(),
-			fcppt::move(
+			std::move(
 				pid),
 			cppshell::process::optional_description{
 				_elements.front()});

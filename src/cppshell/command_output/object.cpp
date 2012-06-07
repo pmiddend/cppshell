@@ -3,7 +3,7 @@
 #include <cppshell/command_output/object.hpp>
 #include <cppshell/posix/stderr_fd.hpp>
 #include <cppshell/posix/stdout_fd.hpp>
-#include <fcppt/move.hpp>
+#include <utility>
 
 
 cppshell::command_output::object::object(
@@ -16,13 +16,13 @@ cppshell::command_output::object::object(
 	context_(
 		_context),
 	output_{
-		fcppt::move(
+		std::move(
 			_output)},
 	error_{
-		fcppt::move(
+		std::move(
 			_error)},
 	process_id_{
-		fcppt::move(
+		std::move(
 			_process_id)},
 	process_description_{
 		_process_description}
@@ -33,7 +33,7 @@ cppshell::strong_fd_unique_ptr
 cppshell::command_output::object::release_output()
 {
 	return
-		fcppt::move(
+		std::move(
 			output_);
 }
 
@@ -41,7 +41,7 @@ cppshell::strong_fd_unique_ptr
 cppshell::command_output::object::release_error()
 {
 	return
-		fcppt::move(
+		std::move(
 			error_);
 }
 
@@ -49,7 +49,7 @@ cppshell::posix::process_id_unique_ptr
 cppshell::command_output::object::release_process_id()
 {
 	return
-		fcppt::move(
+		std::move(
 			process_id_);
 }
 
@@ -67,7 +67,7 @@ cppshell::command_output::object::~object()
 		error_)
 	{
 		context_.output_manager().add_asynchronous_redirection(
-			fcppt::move(
+			std::move(
 				error_),
 			cppshell::output::redirection_target{
 				cppshell::posix::stderr_fd()});
@@ -77,7 +77,7 @@ cppshell::command_output::object::~object()
 		output_)
 	{
 		context_.output_manager().add_asynchronous_redirection(
-			fcppt::move(
+			std::move(
 				output_),
 			cppshell::output::redirection_target{
 				cppshell::posix::stdout_fd()});

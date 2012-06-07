@@ -1,9 +1,10 @@
 #include <cppshell/check_unix_command_error.hpp>
 #include <cppshell/posix/fork.hpp>
-#include <fcppt/move.hpp>
+#include <cppshell/make_unique.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <unistd.h>
 #include <fcppt/config/external_end.hpp>
+#include <utility>
 
 
 cppshell::posix::process_id_unique_ptr
@@ -11,7 +12,7 @@ cppshell::posix::fork(
 	std::function<void ()> const &_function)
 {
 	cppshell::posix::process_id_unique_ptr id{
-		fcppt::make_unique_ptr<cppshell::posix::process_id>(
+		cppshell::make_unique<cppshell::posix::process_id>(
 			::fork())};
 
 	cppshell::check_unix_command_error(
@@ -23,6 +24,6 @@ cppshell::posix::fork(
 		_function();
 
 	return
-		fcppt::move(
+		std::move(
 			id);
 }

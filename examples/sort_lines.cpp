@@ -3,7 +3,7 @@
 #include <cppshell/fd_to_ostream.hpp>
 #include <cppshell/strong_fd.hpp>
 #include <cppshell/command_output/object.hpp>
-#include <cppshell/command_output/object_scoped_ptr.hpp>
+#include <cppshell/command_output/object_unique_ptr.hpp>
 #include <cppshell/posix/open.hpp>
 #include <fcppt/container/bitfield/object_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
@@ -23,7 +23,7 @@ try
 		cppshell::process::wait_for_completion{
 			true}};
 
-	cppshell::command_output::object_scoped_ptr output{
+	cppshell::command_output::object_unique_ptr output{
 		cppshell::execute_command(
 			context,
 			cppshell::command_arguments

@@ -1,7 +1,7 @@
 #include <cppshell/check_unix_command_error.hpp>
 #include <cppshell/strong_fd.hpp>
 #include <cppshell/posix/open.hpp>
-#include <fcppt/make_unique_ptr.hpp>
+#include <cppshell/make_unique.hpp>
 #include <fcppt/container/bitfield/object_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <sys/stat.h>
@@ -36,7 +36,7 @@ cppshell::posix::open(
 		fd);
 
 	return
-		fcppt::make_unique_ptr<cppshell::strong_fd>(
+		cppshell::make_unique<cppshell::strong_fd>(
 			cppshell::posix::fd{
 				fd});
 }
