@@ -7,7 +7,7 @@
 #include <cppshell/linux/epoll/optional_timeout_duration.hpp>
 #include <cppshell/linux/epoll/parallel_event_count.hpp>
 #include <cppshell/posix/fd.hpp>
-#include <fcppt/noncopyable.hpp>
+#include <cppshell/noncopyable.hpp>
 #include <fcppt/optional.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <chrono>
@@ -22,13 +22,17 @@ namespace epoll
 {
 class object
 {
-FCPPT_NONCOPYABLE(
+CPPSHELL_NONCOPYABLE(
 	object);
 public:
 	CPPSHELL_SYMBOL
 	explicit
 	object(
 		cppshell::linux::epoll::parallel_event_count const &);
+
+	CPPSHELL_SYMBOL
+	object(
+		object &&);
 
 	CPPSHELL_SYMBOL
 	cppshell::linux::epoll::fd_set const

@@ -22,6 +22,16 @@ cppshell::linux::epoll::object::object(
 		fd_.get());
 }
 
+cppshell::linux::epoll::object::object(
+	object &&_other)
+:
+	fd_{
+		_other.fd_},
+	parallel_event_count_{
+		_other.parallel_event_count_}
+{
+}
+
 cppshell::linux::epoll::fd_set const
 cppshell::linux::epoll::object::wait(
 	cppshell::linux::epoll::optional_timeout_duration const &_timeout)

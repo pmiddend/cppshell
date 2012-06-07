@@ -6,7 +6,7 @@
 #include <cppshell/process/data.hpp>
 #include <cppshell/process/optional_description.hpp>
 #include <cppshell/process/wait_for_completion.hpp>
-#include <fcppt/noncopyable.hpp>
+#include <cppshell/noncopyable.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
@@ -18,7 +18,7 @@ namespace process
 {
 class manager
 {
-FCPPT_NONCOPYABLE(
+CPPSHELL_NONCOPYABLE(
 	manager);
 public:
 	CPPSHELL_SYMBOL

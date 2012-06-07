@@ -26,30 +26,15 @@ cppshell::output::manager::add_asynchronous_redirection(
 			_redirection_target.get());
 
 	if(it == fd_to_thread_data_.end())
-	{
-		cppshell::posix::fd key =
-			_redirection_target.get();
-
 		it =
 			fd_to_thread_data_.insert(
-				key,
-				new cppshell::output::thread_data(
-					_redirection_target,
-					std::cref(
-						cancel_event_))).first;
-		/*
-		it =
-			fcppt::container::ptr::insert_unique_ptr_map(
-				fd_to_thread_data_,
-				_redirection_target.get(),
-				cppshell::make_unique<cppshell::output::thread_data>(
-					_redirection_target,
-					std::cref(
-						cancel_event_))).first;
-						*/
-	}
+				std::make_pair(
+					_redirection_target.get(),
+					cppshell::output::thread_data{
+						_redirection_target,
+						cancel_event_})).first;
 
-	it->second->add(
+	it->second.add(
 		std::move(
 			_asynchronous_fd));
 }

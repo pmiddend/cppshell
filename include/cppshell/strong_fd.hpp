@@ -3,14 +3,14 @@
 
 #include <cppshell/symbol.hpp>
 #include <cppshell/posix/fd.hpp>
-#include <fcppt/noncopyable.hpp>
+#include <cppshell/noncopyable.hpp>
 
 
 namespace cppshell
 {
 class strong_fd
 {
-FCPPT_NONCOPYABLE(
+CPPSHELL_NONCOPYABLE(
 	strong_fd);
 public:
 	CPPSHELL_SYMBOL

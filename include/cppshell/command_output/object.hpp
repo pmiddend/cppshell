@@ -6,7 +6,7 @@
 #include <cppshell/symbol.hpp>
 #include <cppshell/posix/process_id_unique_ptr.hpp>
 #include <cppshell/process/optional_description.hpp>
-#include <fcppt/noncopyable.hpp>
+#include <cppshell/noncopyable.hpp>
 #include <fcppt/optional.hpp>
 
 
@@ -16,7 +16,7 @@ namespace command_output
 {
 class object
 {
-FCPPT_NONCOPYABLE(
+CPPSHELL_NONCOPYABLE(
 	object);
 public:
 	CPPSHELL_SYMBOL

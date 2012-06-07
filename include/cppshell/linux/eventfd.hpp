@@ -3,7 +3,7 @@
 
 #include <cppshell/symbol.hpp>
 #include <cppshell/posix/fd.hpp>
-#include <fcppt/noncopyable.hpp>
+#include <cppshell/noncopyable.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <cstdint>
 #include <fcppt/config/external_end.hpp>
@@ -15,7 +15,7 @@ namespace linux
 {
 class eventfd
 {
-FCPPT_NONCOPYABLE(
+CPPSHELL_NONCOPYABLE(
 	eventfd);
 public:
 	typedef

@@ -5,7 +5,7 @@
 #include <cppshell/output/manager.hpp>
 #include <cppshell/process/manager.hpp>
 #include <cppshell/process/wait_for_completion.hpp>
-#include <fcppt/noncopyable.hpp>
+#include <cppshell/noncopyable.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <thread>
 #include <fcppt/config/external_end.hpp>
@@ -15,7 +15,7 @@ namespace cppshell
 {
 class context
 {
-FCPPT_NONCOPYABLE(
+CPPSHELL_NONCOPYABLE(
 	context);
 public:
 	CPPSHELL_SYMBOL

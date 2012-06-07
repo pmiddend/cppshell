@@ -3,7 +3,7 @@
 
 #include <cppshell/strong_fd_unique_ptr.hpp>
 #include <cppshell/symbol.hpp>
-#include <fcppt/noncopyable.hpp>
+#include <cppshell/noncopyable.hpp>
 
 
 namespace cppshell
@@ -12,7 +12,7 @@ namespace posix
 {
 class pipe
 {
-FCPPT_NONCOPYABLE(
+CPPSHELL_NONCOPYABLE(
 	pipe);
 public:
 	CPPSHELL_SYMBOL

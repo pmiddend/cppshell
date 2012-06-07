@@ -8,9 +8,9 @@
 #include <cppshell/output/redirection_target.hpp>
 #include <cppshell/output/thread_data.hpp>
 #include <cppshell/posix/fd.hpp>
-#include <fcppt/noncopyable.hpp>
+#include <cppshell/noncopyable.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <boost/ptr_container/ptr_map.hpp>
+#include <map>
 #include <thread>
 #include <fcppt/config/external_end.hpp>
 
@@ -21,7 +21,7 @@ namespace output
 {
 class manager
 {
-FCPPT_NONCOPYABLE(
+CPPSHELL_NONCOPYABLE(
 	manager);
 public:
 	CPPSHELL_SYMBOL
@@ -36,7 +36,7 @@ public:
 	~manager();
 private:
 	typedef
-	boost::ptr_map
+	std::map
 	<
 		cppshell::posix::fd,
 		cppshell::output::thread_data

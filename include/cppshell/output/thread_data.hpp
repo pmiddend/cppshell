@@ -6,7 +6,7 @@
 #include <cppshell/linux/eventfd_fwd.hpp>
 #include <cppshell/linux/epoll/object.hpp>
 #include <cppshell/output/redirection_target.hpp>
-#include <fcppt/noncopyable.hpp>
+#include <cppshell/noncopyable.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <thread>
 #include <fcppt/config/external_end.hpp>
@@ -18,12 +18,17 @@ namespace output
 {
 class thread_data
 {
+CPPSHELL_NONCOPYABLE(
+	thread_data);
 public:
 	CPPSHELL_SYMBOL
 	explicit
 	thread_data(
 		cppshell::output::redirection_target const &,
 		cppshell::linux::eventfd const &cancel_fd);
+
+	thread_data(
+		thread_data &&);
 
 	void
 	add(
