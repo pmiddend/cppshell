@@ -30,14 +30,16 @@ try
 			{
 				"sort"
 			},
-			cppshell::error_stream_flags_field{},
+			cppshell::stderr_to_stdout{
+				false},
 			cppshell::execute_command(
 				context,
 				cppshell::command_arguments
 				{
 					"cat"
 				},
-				cppshell::error_stream_flags_field{},
+				cppshell::stderr_to_stdout{
+					false},
 				cppshell::posix::open(
 					argv[1],
 					cppshell::posix::open_flags_field{

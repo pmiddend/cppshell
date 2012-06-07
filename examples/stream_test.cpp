@@ -28,14 +28,16 @@ try
 				"wc",
 				"-c"
 			},
-			cppshell::error_stream_flags_field::null(),
+			cppshell::stderr_to_stdout{
+				false},
 			cppshell::execute_command(
 				context,
 				cppshell::command_arguments
 				{
 					"/etc/passwd"
 				},
-				cppshell::error_stream_flags_field::null(),
+				cppshell::stderr_to_stdout{
+					false},
 				cppshell::optional_input_fd{})->release_output())};
 
 	std::cout << "main: Outputting to stream\n";

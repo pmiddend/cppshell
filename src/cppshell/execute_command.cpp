@@ -1,5 +1,3 @@
-#include <cppshell/posix/stdout_fd.hpp>
-#include <cppshell/posix/stderr_fd.hpp>
 #include <cppshell/context.hpp>
 #include <cppshell/execute_command.hpp>
 #include <cppshell/strong_fd.hpp>
@@ -9,6 +7,9 @@
 #include <cppshell/posix/pipe.hpp>
 #include <cppshell/posix/redirect_stderr_to_stdout.hpp>
 #include <cppshell/posix/redirect_to_fd.hpp>
+#include <cppshell/posix/stderr_fd.hpp>
+#include <cppshell/posix/stdin_fd.hpp>
+#include <cppshell/posix/stdout_fd.hpp>
 #include <fcppt/make_unique_ptr.hpp>
 #include <fcppt/move.hpp>
 #include <fcppt/optional.hpp>
@@ -29,7 +30,7 @@ forked_function(
 	cppshell::optional_input_fd &_optional_input_fd,
 	cppshell::posix::pipe &out_pipe,
 	cppshell::posix::pipe &err_pipe,
-	cppshell::error_stream_flags_field const &_error_stream_flags)
+	cppshell::stderr_to_stdout const &_stderr_to_stdout)
 {
 	out_pipe.release_read_end();
 	err_pipe.release_read_end();
@@ -48,19 +49,13 @@ forked_function(
 		err_write_end->value(),
 		cppshell::posix::stderr_fd());
 
-	if(_error_stream_flags & cppshell::error_stream_flags::redirect_to_output)
-	{
+	if(_stderr_to_stdout.get())
 		cppshell::posix::redirect_stderr_to_stdout();
-	}
-	else if(!(_error_stream_flags & cppshell::error_stream_flags::ignore))
-	{
-
-	}
 
 	if(_optional_input_fd)
 		cppshell::posix::redirect_to_fd(
 			_optional_input_fd->value(),
-			cppshell::posix::stdout_fd());
+			cppshell::posix::stdin_fd());
 
 	cppshell::posix::exec(
 		_elements);
@@ -71,7 +66,7 @@ cppshell::command_output::object_unique_ptr
 cppshell::execute_command(
 	cppshell::context &_context,
 	cppshell::command_arguments const &_elements,
-	cppshell::error_stream_flags_field const &_error_stream_flags,
+	cppshell::stderr_to_stdout const &_stderr_to_stdout,
 	cppshell::optional_input_fd _optional_input_fd)
 {
 	FCPPT_ASSERT_PRE_MESSAGE(
@@ -91,29 +86,19 @@ cppshell::execute_command(
 					out_pipe),
 				std::ref(
 					err_pipe),
-				std::cref(
-					_error_stream_flags)))};
+				_stderr_to_stdout))};
 
 	out_pipe.release_write_end();
 	err_pipe.release_write_end();
 
 	cppshell::strong_fd_unique_ptr error_stream_ptr{};
 
-	if(
-		_error_stream_flags & cppshell::error_stream_flags::redirect_to_output ||
-		_error_stream_flags & cppshell::error_stream_flags::ignore)
-		err_pipe.release_read_end();
-	else
-		error_stream_ptr =
-			err_pipe.release_read_end();
-
 	return
 		fcppt::make_unique_ptr<cppshell::command_output::object>(
 			fcppt::ref(
 				_context),
 			out_pipe.release_read_end(),
-			fcppt::move(
-				error_stream_ptr),
+			err_pipe.release_read_end(),
 			fcppt::move(
 				pid),
 			cppshell::process::optional_description{

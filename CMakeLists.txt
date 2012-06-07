@@ -65,6 +65,7 @@ set(
 	src/cppshell/posix/redirect_stderr_to_stdout.cpp
 	src/cppshell/posix/redirect_to_fd.cpp
 	src/cppshell/posix/stderr_fd.cpp
+	src/cppshell/posix/stdin_fd.cpp
 	src/cppshell/posix/stdout_fd.cpp
 	src/cppshell/posix/wait_for_process.cpp
 	src/cppshell/process/data.cpp
