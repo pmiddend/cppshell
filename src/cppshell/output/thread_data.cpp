@@ -76,7 +76,7 @@ cppshell::output::thread_data::asynchronous_output_thread(
 			if(fd.get() == _cancel_fd.fd().get())
 			{
 				cancel_triggered = true;
-				break;
+				continue;
 			}
 
 			ssize_t const bytes_read{
