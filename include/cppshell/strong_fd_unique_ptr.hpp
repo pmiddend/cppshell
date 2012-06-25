@@ -2,7 +2,9 @@
 #define CPPSHELL_STRONG_FD_UNIQUE_PTR_HPP_INCLUDED
 
 #include <cppshell/strong_fd_fwd.hpp>
+#include <fcppt/config/external_begin.hpp>
 #include <memory>
+#include <fcppt/config/external_end.hpp>
 
 
 namespace cppshell

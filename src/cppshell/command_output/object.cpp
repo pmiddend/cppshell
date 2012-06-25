@@ -3,7 +3,9 @@
 #include <cppshell/command_output/object.hpp>
 #include <cppshell/posix/stderr_fd.hpp>
 #include <cppshell/posix/stdout_fd.hpp>
+#include <fcppt/config/external_begin.hpp>
 #include <utility>
+#include <fcppt/config/external_end.hpp>
 
 
 cppshell::command_output::object::object(

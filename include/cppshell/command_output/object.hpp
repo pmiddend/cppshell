@@ -2,11 +2,11 @@
 #define CPPSHELL_COMMAND_OUTPUT_OBJECT_HPP_INCLUDED
 
 #include <cppshell/context_fwd.hpp>
+#include <cppshell/noncopyable.hpp>
 #include <cppshell/strong_fd_unique_ptr.hpp>
 #include <cppshell/symbol.hpp>
 #include <cppshell/posix/process_id_unique_ptr.hpp>
 #include <cppshell/process/optional_description.hpp>
-#include <cppshell/noncopyable.hpp>
 #include <fcppt/optional.hpp>
 
 

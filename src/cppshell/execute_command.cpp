@@ -1,5 +1,6 @@
 #include <cppshell/context.hpp>
 #include <cppshell/execute_command.hpp>
+#include <cppshell/make_unique.hpp>
 #include <cppshell/strong_fd.hpp>
 #include <cppshell/command_output/object.hpp>
 #include <cppshell/posix/exec.hpp>
@@ -10,8 +11,6 @@
 #include <cppshell/posix/stderr_fd.hpp>
 #include <cppshell/posix/stdin_fd.hpp>
 #include <cppshell/posix/stdout_fd.hpp>
-#include <cppshell/make_unique.hpp>
-#include <utility>
 #include <fcppt/optional.hpp>
 #include <fcppt/ref.hpp>
 #include <fcppt/assert/pre_message.hpp>
@@ -19,6 +18,7 @@
 #include <fcppt/config/external_begin.hpp>
 #include <functional>
 #include <unistd.h>
+#include <utility>
 #include <fcppt/config/external_end.hpp>
 
 

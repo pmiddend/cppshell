@@ -1,12 +1,12 @@
 #ifndef CPPSHELL_PROCESS_MANAGER_HPP_INCLUDED
 #define CPPSHELL_PROCESS_MANAGER_HPP_INCLUDED
 
+#include <cppshell/noncopyable.hpp>
 #include <cppshell/symbol.hpp>
 #include <cppshell/posix/process_id.hpp>
 #include <cppshell/process/data.hpp>
 #include <cppshell/process/optional_description.hpp>
 #include <cppshell/process/wait_for_completion.hpp>
-#include <cppshell/noncopyable.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <vector>
 #include <fcppt/config/external_end.hpp>

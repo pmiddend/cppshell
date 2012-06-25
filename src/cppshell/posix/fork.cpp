@@ -1,10 +1,10 @@
 #include <cppshell/check_unix_command_error.hpp>
-#include <cppshell/posix/fork.hpp>
 #include <cppshell/make_unique.hpp>
+#include <cppshell/posix/fork.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <unistd.h>
-#include <fcppt/config/external_end.hpp>
 #include <utility>
+#include <fcppt/config/external_end.hpp>
 
 
 cppshell::posix::process_id_unique_ptr

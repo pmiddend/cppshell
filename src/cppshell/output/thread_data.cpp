@@ -8,10 +8,10 @@
 #include <fcppt/container/bitfield/object_impl.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <array>
-#include <utility>
 #include <cstddef>
 #include <functional>
 #include <unistd.h>
+#include <utility>
 #include <fcppt/config/external_end.hpp>
 
 
@@ -34,18 +34,6 @@ cppshell::output::thread_data::thread_data(
 		_cancel_fd.fd(),
 		cppshell::linux::epoll::control_flags_field{
 			cppshell::linux::epoll::control_flags::is_readable});
-}
-
-cppshell::output::thread_data::thread_data(
-	thread_data &&_other)
-:
-	epoll_object_(
-		std::move(
-			_other.epoll_object_)),
-	asynchronous_output_thread_(
-		std::move(
-			_other.asynchronous_output_thread_))
-{
 }
 
 void

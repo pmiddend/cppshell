@@ -1,6 +1,7 @@
 #ifndef CPPSHELL_OUTPUT_MANAGER_HPP_INCLUDED
 #define CPPSHELL_OUTPUT_MANAGER_HPP_INCLUDED
 
+#include <cppshell/noncopyable.hpp>
 #include <cppshell/strong_fd_unique_ptr.hpp>
 #include <cppshell/symbol.hpp>
 #include <cppshell/linux/eventfd.hpp>
@@ -8,9 +9,8 @@
 #include <cppshell/output/redirection_target.hpp>
 #include <cppshell/output/thread_data.hpp>
 #include <cppshell/posix/fd.hpp>
-#include <cppshell/noncopyable.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <map>
+#include <boost/ptr_container/ptr_map.hpp>
 #include <thread>
 #include <fcppt/config/external_end.hpp>
 
@@ -36,7 +36,7 @@ public:
 	~manager();
 private:
 	typedef
-	std::map
+	boost::ptr_map
 	<
 		cppshell::posix::fd,
 		cppshell::output::thread_data

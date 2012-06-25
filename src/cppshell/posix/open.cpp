@@ -1,8 +1,8 @@
 #include <cppshell/check_unix_command_error.hpp>
+#include <cppshell/make_unique.hpp>
 #include <cppshell/strong_fd.hpp>
 #include <cppshell/posix/open.hpp>
-#include <cppshell/make_unique.hpp>
-#include <fcppt/container/bitfield/object_impl.hpp>
+#include <cppshell/posix/open_flags_to_posix_flags.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -16,20 +16,12 @@ cppshell::posix::open(
 	boost::filesystem::path const &_path,
 	cppshell::posix::open_flags_field const &_open_flags)
 {
-	int flags = 0;
-
-	if(_open_flags & cppshell::posix::open_flags::read && _open_flags & cppshell::posix::open_flags::write)
-		flags = O_RDWR;
-	else if (_open_flags & cppshell::posix::open_flags::read)
-		flags = O_RDONLY;
-	else if (_open_flags & cppshell::posix::open_flags::write)
-		flags = O_WRONLY;
-
 	int const fd{
 		::open(
 			boost::filesystem::absolute(
 				_path).string<std::string>().c_str(),
-			flags)};
+			cppshell::posix::open_flags_to_posix_flags(
+				_open_flags))};
 
 	cppshell::check_unix_command_error(
 		"open",

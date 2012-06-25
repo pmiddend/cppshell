@@ -1,9 +1,9 @@
 #ifndef CPPSHELL_LINUX_EVENTFD_HPP_INCLUDED
 #define CPPSHELL_LINUX_EVENTFD_HPP_INCLUDED
 
+#include <cppshell/noncopyable.hpp>
 #include <cppshell/symbol.hpp>
 #include <cppshell/posix/fd.hpp>
-#include <cppshell/noncopyable.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <cstdint>
 #include <fcppt/config/external_end.hpp>

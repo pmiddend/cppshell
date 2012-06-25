@@ -1,10 +1,10 @@
 #include <cppshell/check_unix_command_error.hpp>
+#include <cppshell/make_unique.hpp>
 #include <cppshell/strong_fd.hpp>
 #include <cppshell/posix/pipe.hpp>
-#include <cppshell/make_unique.hpp>
-#include <utility>
 #include <fcppt/config/external_begin.hpp>
 #include <unistd.h>
+#include <utility>
 #include <fcppt/config/external_end.hpp>
 
 

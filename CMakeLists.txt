@@ -49,28 +49,51 @@ include_directories(
 
 set(
 	CPPSHELL_FILES
+	src/cppshell/cache_directory.cpp
 	src/cppshell/check_unix_command_error.cpp
+	src/cppshell/command_arguments_from_string.cpp
 	src/cppshell/command_output/object.cpp
+	src/cppshell/config_directory.cpp
 	src/cppshell/context.cpp
 	src/cppshell/execute_command.cpp
 	src/cppshell/fd_to_ostream.cpp
+	src/cppshell/file_contents_if_exists.cpp
+	src/cppshell/getenv.cpp
+	src/cppshell/home_directory.cpp
 	src/cppshell/linux/epoll/object.cpp
 	src/cppshell/linux/eventfd.cpp
 	src/cppshell/output/manager.cpp
 	src/cppshell/output/thread_data.cpp
+	src/cppshell/path_for_executable.cpp
+	src/cppshell/posix/chmod_fd.cpp
 	src/cppshell/posix/exec.cpp
 	src/cppshell/posix/fork.cpp
 	src/cppshell/posix/open.cpp
+	src/cppshell/posix/open_flags_to_posix_flags.cpp
+	src/cppshell/posix/permissions/group_execute.cpp
+	src/cppshell/posix/permissions/group_read.cpp
+	src/cppshell/posix/permissions/group_write.cpp
+	src/cppshell/posix/permissions/others_execute.cpp
+	src/cppshell/posix/permissions/others_read.cpp
+	src/cppshell/posix/permissions/others_write.cpp
+	src/cppshell/posix/permissions/owner_execute.cpp
+	src/cppshell/posix/permissions/owner_read.cpp
+	src/cppshell/posix/permissions/owner_write.cpp
+	src/cppshell/posix/permissions/set_group_id.cpp
+	src/cppshell/posix/permissions/set_user_id.cpp
+	src/cppshell/posix/permissions/sticky.cpp
 	src/cppshell/posix/pipe.cpp
 	src/cppshell/posix/redirect_stderr_to_stdout.cpp
 	src/cppshell/posix/redirect_to_fd.cpp
 	src/cppshell/posix/stderr_fd.cpp
 	src/cppshell/posix/stdin_fd.cpp
 	src/cppshell/posix/stdout_fd.cpp
+	src/cppshell/posix/temporary_file.cpp
 	src/cppshell/posix/wait_for_process.cpp
 	src/cppshell/process/data.cpp
 	src/cppshell/process/manager.cpp
 	src/cppshell/strong_fd.cpp
+	src/cppshell/warning_stream.cpp
 )
 
 fcppt_generate_symbol_header(
@@ -177,5 +200,22 @@ if(
 		SHARED)
 endif()
 
-add_subdirectory(
-	examples)
+option(
+	ENABLE_EXAMPLES
+	"Build the examples"
+	ON)
+
+if(ENABLE_EXAMPLES)
+	add_subdirectory(
+		examples)
+endif()
+
+option(
+	ENABLE_TOOLS
+	"Build the tools"
+	ON)
+
+if(ENABLE_TOOLS)
+	add_subdirectory(
+		tools)
+endif()

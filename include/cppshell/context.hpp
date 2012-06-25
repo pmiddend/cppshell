@@ -1,11 +1,11 @@
 #ifndef CPPSHELL_CONTEXT_HPP_INCLUDED
 #define CPPSHELL_CONTEXT_HPP_INCLUDED
 
+#include <cppshell/noncopyable.hpp>
 #include <cppshell/symbol.hpp>
 #include <cppshell/output/manager.hpp>
 #include <cppshell/process/manager.hpp>
 #include <cppshell/process/wait_for_completion.hpp>
-#include <cppshell/noncopyable.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <thread>
 #include <fcppt/config/external_end.hpp>

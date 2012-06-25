@@ -1,9 +1,9 @@
 #ifndef CPPSHELL_POSIX_PIPE_HPP_INCLUDED
 #define CPPSHELL_POSIX_PIPE_HPP_INCLUDED
 
+#include <cppshell/noncopyable.hpp>
 #include <cppshell/strong_fd_unique_ptr.hpp>
 #include <cppshell/symbol.hpp>
-#include <cppshell/noncopyable.hpp>
 
 
 namespace cppshell

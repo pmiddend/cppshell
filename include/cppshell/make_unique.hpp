@@ -1,8 +1,11 @@
 #ifndef CPPSHELL_MAKE_UNIQUE_PTR_HPP_INCLUDED
 #define CPPSHELL_MAKE_UNIQUE_PTR_HPP_INCLUDED
 
+#include <fcppt/config/external_begin.hpp>
 #include <memory>
 #include <utility>
+#include <fcppt/config/external_end.hpp>
+
 
 namespace cppshell
 {
