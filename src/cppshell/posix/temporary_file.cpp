@@ -45,7 +45,7 @@ cppshell::posix::temporary_file::temporary_file(
 	fd_ =
 		cppshell::make_unique<cppshell::strong_fd>(
 			cppshell::posix::fd{
-			returned_fd});
+				returned_fd});
 
 	path_ =
 		&prefix[0];
@@ -56,6 +56,14 @@ cppshell::posix::temporary_file::fd() const
 {
 	return
 		fd_->value();
+}
+
+cppshell::strong_fd_unique_ptr
+cppshell::posix::temporary_file::release_fd()
+{
+	return
+		std::move(
+			fd_);
 }
 
 boost::filesystem::path const

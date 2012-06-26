@@ -5,7 +5,6 @@
 #include <sys/wait.h>
 #include <fcppt/config/external_end.hpp>
 
-
 cppshell::posix::process_return_value const
 cppshell::posix::wait_for_process(
 	cppshell::posix::process_id const &_process_id)

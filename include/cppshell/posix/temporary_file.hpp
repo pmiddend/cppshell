@@ -30,6 +30,10 @@ public:
 	fd() const;
 
 	CPPSHELL_SYMBOL
+	cppshell::strong_fd_unique_ptr
+	release_fd();
+
+	CPPSHELL_SYMBOL
 	boost::filesystem::path const
 	path() const;
 

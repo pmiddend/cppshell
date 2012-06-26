@@ -56,6 +56,7 @@ set(
 	src/cppshell/config_directory.cpp
 	src/cppshell/context.cpp
 	src/cppshell/execute_command.cpp
+	src/cppshell/execute_command_and_wait.cpp
 	src/cppshell/fd_to_ostream.cpp
 	src/cppshell/file_contents_if_exists.cpp
 	src/cppshell/getenv.cpp

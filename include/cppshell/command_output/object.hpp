@@ -35,6 +35,7 @@ public:
 	cppshell::strong_fd_unique_ptr
 	release_error();
 
+	CPPSHELL_SYMBOL
 	cppshell::posix::process_id_unique_ptr
 	release_process_id();
 

@@ -83,4 +83,72 @@ be a problem.
 Documentation
 ========
 
-Coming soon.
+Using the "jit"
+---------------
+
+In bash, you can write script files just like normal text files, but with a
+"shebang" line at the top, as such:
+
+	#!/bin/bash
+
+	echo "my script"
+
+This is possible in cppshell, too, using the same syntax. Assuming the program
+`cppshell_jit` is in your `$PATH`:
+
+	#!/usr/bin/env cppshell_jit
+	#include <iostream>
+
+	int main()
+	{
+		std::cout << "my script\n";
+	}
+
+You could store this file as `test.cpp` and give it executable permissions (via
+`chmod +x test.cpp`) and it's runnable.
+
+cppshell will read the configuration file to determine the compiler of your
+choice (if no configuration exists, it will look for g++ in your `$PATH`) and
+compile the file. If errors occur, those will be printed. If no errors occur,
+the program will be executed. The configuration file resides in
+`$XDG_CONFIG_HOME/cppshell/config.ini` and has a very simple format. Set your
+preferred compiler using:
+
+	compiler=/usr/bin/clang++
+
+Arguments can be passed to the script. They will be forwarded to the script as
+arguments to `main`:
+
+	#!/usr/bin/env cppshell_jit
+	#include <iostream>
+
+	int main(
+		int argc,
+		char *argv[])
+	{
+		std::cout << "=> Hi, " << argv[1] << "!\n";
+	}
+
+Will result in:
+
+	./test.cpp Philipp
+	=> Hi, Philipp!
+
+If you need additional libraries or compilerflags in your script, you can pass
+those to the cppshell_jit program, too:
+
+	#!/usr/bin/env cppshell_jit -lSDL
+	#include <iostream>
+	#include <SDL.h>
+
+	int main()
+	{
+		SDL_Init(SDL_INIT_VIDEO);
+	}
+
+
+In the future, there'll be a cache, so scripts will be compiled only once. This
+is not implemented, yet (see issue gh-1).
+
+Also, default cflags and lflags should be configurable via configuration file
+(see issue gh-2).

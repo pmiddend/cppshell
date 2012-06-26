@@ -2,6 +2,7 @@
 #include <cppshell/cache_directory.hpp>
 #include <cppshell/config_directory.hpp>
 #include <cppshell/context.hpp>
+#include <cppshell/execute_command_and_wait.hpp>
 #include <cppshell/execute_command.hpp>
 #include <cppshell/file_contents_if_exists.hpp>
 #include <cppshell/path_for_executable.hpp>
@@ -25,6 +26,12 @@ main(
 	int argc,
 	char *argv[])
 {
+	if(argc == 1)
+	{
+		std::cerr << "Error, no files given...\n";
+		return EXIT_FAILURE;
+	}
+
 	std::string const
 		cppshell_name{
 			argv[0]};
@@ -95,6 +102,8 @@ main(
 		cppshell::posix::permissions::owner_execute |
 		cppshell::posix::permissions::owner_write);
 
+	temporary_executable.release_fd();
+
 	boost::filesystem::path compiler_path;
 
 	if(!config.count("compiler"))
@@ -130,50 +139,42 @@ main(
 			temporary_executable.path().string<std::string>()
 		});
 
-	/*
 	compiler_arguments.insert(
 		compiler_arguments.end(),
 		cppshell_arguments.begin(),
 		cppshell_arguments.end());
-		*/
 
 	compiler_arguments.push_back(
 		std::string{
 			"-"});
 
-	std::cout << "Compiling to " << temporary_executable.path().string<std::string>() << " using arguments:\n";
-
-	for(std::string const &s : compiler_arguments)
-		std::cout << s << "\n";
-
-	cppshell::execute_command(
-		context,
-		compiler_arguments,
-		cppshell::stderr_to_stdout{
-			false},
-		cppshell::execute_command(
+	if(
+		cppshell::execute_command_and_wait(
 			context,
-			cppshell::command_arguments{
-				"sed",
-				"1d",
-				program_name},
+			compiler_arguments,
 			cppshell::stderr_to_stdout{
 				false},
-			cppshell::optional_input_fd{})->release_output());
+			cppshell::execute_command(
+				context,
+				cppshell::command_arguments{
+					"sed",
+					"1d",
+					program_name},
+				cppshell::stderr_to_stdout{
+					false},
+				cppshell::optional_input_fd{})->release_output()).get())
+		return
+			EXIT_FAILURE;
 
 	program_arguments.insert(
 		program_arguments.begin(),
 		temporary_executable.path().string<std::string>());
 
-	std::cout << "Done, executing with the following arguments:\n";
-
-	for(std::string const &s : program_arguments)
-		std::cout << s << "\n";
-
-	cppshell::execute_command(
-		context,
-		program_arguments,
-		cppshell::stderr_to_stdout{
-			false},
-		cppshell::optional_input_fd{});
+	return
+		cppshell::execute_command_and_wait(
+			context,
+			program_arguments,
+			cppshell::stderr_to_stdout{
+				false},
+			cppshell::optional_input_fd{}).get();
 }
